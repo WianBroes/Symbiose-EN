@@ -1,0 +1,53 @@
+# ─── OS ─────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# ─── Symbiose system ──────────────────────────────
+_SYSTEM/.init_done
+_SYSTEM/ENV.md
+_SYSTEM/profile/
+_SYSTEM/memory/observations.md
+_SYSTEM/memory/modes.md
+
+# ─── Python ─────────────────────────────────────────
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+*.egg-info/
+
+# ─── Node ───────────────────────────────────────────
+node_modules/
+dist/
+build/
+*.log
+
+# ─── Editors / Harnesses ────────────────────────────
+.obsidian/
+.zed/
+.vscode/
+.idea/
+.claude/
+.claudian/
+.smart-env/
+.continuerc.json
+
+# ─── Aider ──────────────────────────────────────────
+.aider*
+.aider/
+
+# ─── Pi (config perso) ──────────────────────────────
+.pi/
+
+# ─── Environnement ──────────────────────────────────
+.env
+.env.local
+*.private
+
+# ─── Temporaires ────────────────────────────────────
+*.tmp
+*.bak
