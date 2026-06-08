@@ -21,19 +21,20 @@ Open a terminal in the project folder and type:
 
 ## 2. Say "yo"
 
-The system detects this is your first session and:
+The system detects it's your first session and:
 
 ```
-1. Scans your machine (OS, RAM, CPU)
-2. Identifies your tool (PI, Claude Code…)
-3. Welcomes you
-4. Asks for your name and profile
-5. Creates your profile
-6. Marks initialization as done
+1. Asks your language preference
+2. Scans your machine (OS, RAM, CPU)
+3. Identifies your tool (PI, Claude Code…)
+4. Welcomes you
+5. Asks your name and profile
+6. Creates your profile
+7. Marks initialization as done
 → System ready
 ```
 
-Then just **talk to it naturally**, in plain language.
+Then, talk to it **naturally**, in plain language.
 
 ---
 
@@ -46,7 +47,7 @@ Nothing to learn. Give instructions like you would to a human:
 - *"Explain this folder structure"*
 - *"Find all recently modified markdown files"*
 
-The AI announces each action before running it. You validate or correct.
+The AI announces each action before executing it. You validate or correct.
 
 Project templates are available in `_Templates/`.
 
@@ -66,7 +67,7 @@ or
 we're done
 ```
 
-The system automatically saves context to `00_TRANSFERT.md` for the next session.
+The system automatically saves context in `00_TRANSFERT.md` for the next session.
 **Without closing, the system doesn't learn — it stagnates.**
 
 ---
@@ -76,8 +77,8 @@ The system automatically saves context to `00_TRANSFERT.md` for the next session
 - **Everything is in the files.** Open any `.md` in `_SYSTEM/` to understand or modify behavior.
 - **The system learns.** The more you use it, the more relevant the AI becomes for you.
 - **You stay in control.** The AI does nothing without validation (SECURE mode by default).
-- **No dependencies.** No npm, pip, brew, nothing. Just markdown files.
-- **Automatic backup on every close.** Closing a session saves a local snapshot — nothing is sent online. If something breaks, just tell your AI *"something stopped working, restore the system to its previous state"* — it handles the rest.
+- **No dependencies for the base system.** Just markdown files. Optional extensions (e.g. web-search for PI) have their own dependencies — the wizard offers automatic installation.
+- **Automatic backup at each closure.** Each session close saves system state locally — nothing is sent online. If something breaks, just tell your AI *"something isn't working, restore the system to its previous state"* — it handles the rest.
 
 ---
 
@@ -85,10 +86,10 @@ The system automatically saves context to `00_TRANSFERT.md` for the next session
 
 | Problem | Solution |
 |---------|----------|
-| AI doesn't respond at startup | Check that you're in the Symbiose folder |
-| "Missing file" error | Check that all `_SYSTEM/` files are present (CORE.md, AUTOSTART.md, ENV.md, 00_SESSION_CLOSE.md) |
+| AI doesn't respond at startup | Make sure you're in the Symbiose folder |
+| "Missing file" error | Check that all `_SYSTEM/` files are present (CORE.md, AUTOSTART.md, 00_SESSION_CLOSE.md) — `ENV.md` is generated at first startup |
 | System doesn't remember me | Check that `_SYSTEM/.init_done` exists (otherwise it reinitializes) |
-| I want to start fresh | Delete `_SYSTEM/.init_done` and `_SYSTEM/memory/observations.md` |
+| I want to start over | Delete `_SYSTEM/.init_done` and `_SYSTEM/memory/observations.md` |
 
 ---
 

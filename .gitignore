@@ -35,6 +35,7 @@ build/
 .claudian/
 .smart-env/
 .continuerc.json
+CLAUDE.md
 
 # ─── Aider ──────────────────────────────────────────
 .aider*

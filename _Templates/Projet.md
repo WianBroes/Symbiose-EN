@@ -1,14 +1,14 @@
 ---
-name: ""
-status: active       # active | dormant | archived
-type: code           # code | folder | life
+nom: ""
+statut: actif       # actif | dormant | archive
+type: code          # code | dossier | vie
 stack: ""
-last_sync: ""
-dependencies: []
+derniere_activite: ""
+dependances: []
 tags: []
 ---
 
-# {{NAME}}
+# {{NOM}}
 
 > {{DESCRIPTION}}
 
@@ -18,11 +18,11 @@ tags: []
 {{TREE}}
 ```
 
-## Status
+## Statut
 
-{{STATUS_NOTES}}
+{{STATUT_NOTES}}
 
-## Recent sessions
+## Sessions récentes
 
-<!-- Last session mentioned in TRANSFER -->
+<!-- Dernière session mentionnée dans les TRANSFERT -->
 -

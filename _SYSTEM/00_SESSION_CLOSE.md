@@ -6,7 +6,7 @@
 
 ## 0. Display
 
-Final block : checklist → what was built → what remains → observations → profile suggestion.
+Final block: checklist → what was built → what remains → observations → profile suggestion.
 
 ```
 ## ✅ Closure checklist
@@ -17,17 +17,17 @@ Final block : checklist → what was built → what remains → observations →
 - [ ] Profile update suggested (section 3a)
 - [ ] Profile updated (if confirmed)
 - [ ] 00_TRANSFERT.md updated
-- [ ] Local snapshot (`git add "00_📥 Inbox/00_TRANSFERT.md" [+ _SYSTEM/*.md if modified] && git commit -m "session close YYYY-MM-DD" --quiet`)
+- [ ] Local snapshot (git add "00_📥Inbox/00_TRANSFERT.md" [+ _SYSTEM/*.md if modified] && git commit -m "session close YYYY-MM-DD" --quiet)
 ```
 
 ## 0b. Dominant mode (required)
 
-Write to `_SYSTEM/memory/modes.md` :
+Write to `_SYSTEM/memory/modes.md`:
 ```
 [DATE] [PROJECT] — [raw description: what we did, signals, what dominated]
 ```
 
-**New mode detection:** read last 5 entries → pattern ≥2x → candidate. 3 confirmations → propose graduation → the mode is documented in `_SYSTEM/memory/modes.md` with its suggested autonomy.
+**New mode detection:** read last 5 entries → pattern ≥2x → candidate. 3 confirmations → propose graduation → mode documented in `_SYSTEM/memory/modes.md` with suggested autonomy.
 
 ---
 
@@ -64,6 +64,12 @@ User says **"close"**, **"we're done"**, or **"closure ritual"**.
 > No psychologizing. Check `_SYSTEM/profile/` before writing.
 > If you think there's nothing to observe → don't conclude alone. Ask the user.
 
+**Before writing here — mandatory protocol:**
+1. Re-read the entire session, not just the end
+2. Look for: spontaneous decisions, reactions, recurring phrasings, refusals, immediate validations
+3. Read `_SYSTEM/memory/observations.md` — increment what is confirmed, add what is new
+4. Incrementing counters is the minimum — identifying something new is the goal
+
 -
 ```
 
@@ -77,15 +83,15 @@ If user says yes → update `_SYSTEM/profile/` and `CORE.md` section 2 if action
 
 ### 3b. Transfer merge (required)
 
-Read existing `00_📥 Inbox/00_TRANSFERT.md` → merge current state :
+Read existing `00_📥Inbox/00_TRANSFERT.md` → merge current state:
 - **Resolved** → remove
 - **Progressed** → update
 - **New** → add
 - **Unchanged** → keep
 
-Format :
+Format:
 ```markdown
-# TRANSFER — {{DATE}}
+# TRANSFERT — {{DATE}}
 
 **Session:** {{TOPIC}}
 

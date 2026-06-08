@@ -2,7 +2,7 @@
 
 ## 🐛 Report a bug
 
-Open a [GitHub issue](https://github.com/WianBroes/Symbiose-EN/issues) with:
+Open a [GitHub issue](https://github.com/WianBroes/Symbiose-FR/issues) with:
 - The affected file
 - What happens vs what should happen
 - If possible, the command or message that triggered it
@@ -26,7 +26,7 @@ Open a [GitHub issue](https://github.com/WianBroes/Symbiose-EN/issues) with:
 
 - **Language**: English (system source files are in English)
 - **Format**: readable Markdown, no excessive formatting
-- **AGENTS.md**: stay agnostic — no tool-specific references
+- **AGENTS.md**: core behavior stays agnostic — tool-specific content goes in dedicated sections (e.g. "Extensions pi")
 
 ---
 
