@@ -7,19 +7,16 @@
 
 ### 1. Check
 
-- `_SYSTEM/.init_done` exists? → **Yes** → proceed to **Compact flow (section 3)**
-- `_SYSTEM/.init_done` exists? → **No** → proceed to **First startup (section 2)**
+- `01_Profil/profil.md` exists? → **Yes** → proceed to **Compact flow (section 3)**
+- `01_Profil/profil.md` exists? → **No** → proceed to **First startup (section 2)**
 
 ---
 
 ### 2. First startup 👶
 
-The greeting (ASCII + loading bar) comes **first**, then the wizard.
-
 1. **Display** `_SYSTEM/startup_ascii.md`
-2. **Loading bar:**
+2. **Validation:**
    ```
-   ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓  100%
    ✓ CORE · ENV · memory · TRANSFERT
    ```
 3. Run **`_SYSTEM/00_FIRST_STARTUP.md`** which:
@@ -27,12 +24,12 @@ The greeting (ASCII + loading bar) comes **first**, then the wizard.
    - Scans the machine (OS, CPU, RAM, shell)
    - Detects the tool (PI, Claude Code, Codex CLI…)
    - Asks name and short description
-   - Creates user profile in `_SYSTEM/profile/`
-   - Writes `_SYSTEM/.init_done` marker
-   - Updates `00_📥Inbox/00_TRANSFERT.md`
-4. **Finish with:**
+   - Creates user profile in `01_Profil/`
+   - `01_Profil/profil.md` now serves as init marker
+4. **Proceed directly to Compact flow (section 3)** immediately after wizard ends.
+5. **Finish with:**
    ```
-   Yo [name], système prêt.
+   Yo [name], system ready.
    System is ready. Start whenever you are.
    ```
 
@@ -40,34 +37,33 @@ The greeting (ASCII + loading bar) comes **first**, then the wizard.
 
 ### 3. Subsequent sessions — compact flow 🔁
 
-Triggered when `.init_done` exists.
-
 1. **Display** `_SYSTEM/startup_ascii.md`
 2. **Read & validate** silently:
-   - `_SYSTEM/profile/language.md` ← determines greeting language
    - `_SYSTEM/CORE.md` (section 0 — identity & project)
-   - `_SYSTEM/ENV.md`
-   - `_SYSTEM/memory/observations.md`
+   - `01_Profil/profil.md` ← machine, user, language, traits, skills
+   - `01_Profil/memory/observations.md`
    - `00_📥Inbox/00_TRANSFERT.md`
-3. **Output** — loading bar + compact validation:
+
+### 3a. Dream — observation consolidation
+
+If `_SYSTEM/kernel/.dream_requested` exists → load and execute `_SYSTEM/skills/dream/SKILL.md` before applying the profile.
+
+3. **Read & apply profile** (cf. CORE.md section 2b):
+   - `01_Profil/profil.md` (section 🧬 Traits) ← generate behavioral rules
+   - `01_Profil/profil.md` (section 🎯 Skills) ← adjust depth per domain
+4. **Output** — compact validation:
    ```
-   ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓  100%
-   ✓ CORE · ENV · memory · TRANSFERT | [name]
-   FR: Yo [name], système prêt.  |  EN: Yo [name], system ready.
+   ✓ CORE · ENV · memory · TRANSFERT · TRAITS · SKILLS | [name]
+   Yo [name], system ready.
    ```
-4. **Display** TRANSFERT content visibly (below the greeting — shows current session context inline)
-5. Wait for instructions
+5. **Display** TRANSFERT content visibly (below greeting)
+6. Wait for instructions — with profile rules active
 
 ---
 
 ### 4. Greeting handler 🖐️
 
-Applies **regardless** of startup type when the user's first message is a greeting.
-
-| User says     | Behavior |
-|---------------|----------|
-| **"yo"**     | Full startup flow (ASCII + loading bar + "Yo [name], system ready.") **always** — whether first or subsequent session |
-| "hey", "hi", "hello", etc. | Casual greeting → normal response (no ASCII art), then proceed with startup logic |
-
-> **Note:** "yo" is the canonical startup word. It triggers the full branded greeting every time.
-> Other greetings are treated as casual conversation starters without ceremony.
+| User says | Behavior |
+|-----------|----------|
+| **"yo"** | Full startup flow (ASCII + "Yo [name], system ready.") **always** |
+| "hi", "hey", "hello", etc. | Casual greeting → normal response, no ASCII art |

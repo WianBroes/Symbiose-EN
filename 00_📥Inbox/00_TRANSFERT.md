@@ -1,3 +1,3 @@
 # TRANSFERT
 
-*No previous session.*
+> Context from the last session — updated at each closure.

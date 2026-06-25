@@ -7,7 +7,7 @@
 
 👉 **AS SOON as the user sends their first message:**
 
-1. Immediately check if `_SYSTEM/.init_done` exists (`test -f _SYSTEM/.init_done`).
+1. Immediately check if `01_Profil/profil.md` exists (`test -f 01_Profil/profil.md`).
 2. **If missing** → STOP. Execute `_SYSTEM/AUTOSTART.md` **immediately**.
    - Do NOT respond to the user.
    - Do NOT make small talk.
@@ -24,7 +24,7 @@
 - **Closing**: say "close" or "we're done" → `_SYSTEM/00_SESSION_CLOSE.md`
 - **Natural language**: talk normally, no special commands.
 - **Confirmation**: ask before deleting any `.md` file.
-- **Memory**: `_SYSTEM/memory/` — observations accumulate here.
+- **Memory**: `01_Profil/memory/` — observations accumulate here.
 
 📎 `_SYSTEM/CORE.md` — full manual (role, rules, modes, discipline)
 
@@ -38,6 +38,9 @@
 | Skill | File | Triggers |
 |-------|------|---------|
 | **import** | `_SYSTEM/skills/import/SKILL.md` | "import", "index", "process inbox", "add these docs", files in `00_📥Inbox/` |
+| **export** | `_SYSTEM/skills/export/SKILL.md` | "export", "export framework", "export profile", "backup", "prepare for GitHub", migration to new machine |
+| **closure** | `_SYSTEM/skills/closure/SKILL.md` | "close", "we're done", "closure ritual" |
+| **dream** | `_SYSTEM/skills/dream/SKILL.md` | "dream", "consolidate observations", "clean memory" |
 
 ---
 

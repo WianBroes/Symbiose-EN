@@ -2,7 +2,7 @@
 
 ## 🐛 Report a bug
 
-Open a [GitHub issue](https://github.com/WianBroes/Symbiose-FR/issues) with:
+Open a [GitHub issue](https://github.com/WianBroes/Symbiose-EN/issues) with:
 - The affected file
 - What happens vs what should happen
 - If possible, the command or message that triggered it
@@ -17,16 +17,17 @@ Open a [GitHub issue](https://github.com/WianBroes/Symbiose-FR/issues) with:
 
 ## 📐 Rules
 
-- **Structure**: respect `_SYSTEM/` organization (CORE.md, modes/, memory/, profile/)
-- **.md files**: comment your changes (why this change)
-- **Behavior**: don't break the startup sequence (AUTOSTART.md → CORE.md)
-- **Memory**: don't touch `_SYSTEM/memory/` in PRs — it's user-specific
+- **Structure**: respect `_SYSTEM/` organization (CORE.md, skills/, kernel/, modes/)
+- **.md files**: explain why, not what
+- **Behavior**: don't break the startup sequence (`AUTOSTART.md` → `CORE.md`)
+- **Memory**: don't touch `01_Profil/` in PRs — it's user-specific and gitignored
+- **Cross-platform**: bash commands must work on Linux, macOS, and Windows (git-bash)
 
 ## 📝 Style
 
-- **Language**: English (system source files are in English)
+- **Language**: English
 - **Format**: readable Markdown, no excessive formatting
-- **AGENTS.md**: core behavior stays agnostic — tool-specific content goes in dedicated sections (e.g. "Extensions pi")
+- **AGENTS.md**: core behavior stays agnostic — tool-specific content goes in dedicated sections
 
 ---
 

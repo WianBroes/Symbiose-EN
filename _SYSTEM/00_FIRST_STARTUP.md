@@ -14,15 +14,44 @@ Choose your language:
   2. Français
 ```
 
-Save the preference to `_SYSTEM/profile/language.md`.
+Save the preference to `01_Profil/profil.md` (field `**Language**` in the 👤 User section).
 
 ### 2. Machine scan
 
-Fill `_SYSTEM/ENV.md`:
+Fill `01_Profil/profil.md` (section 🖥️ Machine). Detect OS with `uname -s`, then adapt:
 
-```
-hostname, OS (cat /etc/os-release), kernel (uname -a),
-CPU (lscpu → model + cores), RAM (free -h), shell ($SHELL)
+```bash
+# OS
+uname -s   # → Linux / Darwin / MINGW* (Windows git-bash)
+
+# Linux
+cat /etc/os-release | grep PRETTY_NAME
+# macOS
+sw_vers -productName && sw_vers -productVersion
+# Windows (git-bash)
+uname -o
+
+# Kernel
+uname -r
+
+# CPU
+# Linux
+lscpu | grep "Model name"
+# macOS
+sysctl -n machdep.cpu.brand_string
+# Windows
+wmic cpu get name 2>/dev/null || echo "N/A"
+
+# RAM
+# Linux
+free -h | awk '/^Mem:/{print $2}'
+# macOS
+echo "$(( $(sysctl -n hw.memsize) / 1073741824 )) GiB"
+# Windows
+wmic computersystem get TotalPhysicalMemory 2>/dev/null || echo "N/A"
+
+# Shell
+echo $SHELL
 ```
 
 ### 3. Tool detection
@@ -39,21 +68,39 @@ echo "CLAUDECODE=${CLAUDECODE:-not detected}"
 | `PI_CODING_AGENT` | any value      | PI          |
 | `CLAUDECODE`      | `1`            | Claude Code |
 
-**If `CLAUDECODE=1` detected AND `CLAUDE.md` absent at root → offer:**
+**If `CLAUDECODE=1` detected → offer:**
 
 ```
-Claude Code detected. Create the auto-start file (CLAUDE.md)?
+Claude Code detected. Activate the kernel (automatic micro-scans)?
   1. Yes (recommended)
   2. No
 ```
 
-- **If yes** → create `CLAUDE.md` at root:
-  ```markdown
-  # Symbiose — Claude Code
-
-  Read `AGENTS.md` before responding to any message.
+- **If yes** → get the absolute project path (`pwd`), then create `.claude/settings.local.json`:
+  ```bash
+  PROJ=$(pwd)
+  mkdir -p .claude
+  cat > .claude/settings.local.json << EOF
+  {
+    "hooks": {
+      "UserPromptSubmit": [
+        {
+          "matcher": "*",
+          "hooks": [
+            {
+              "type": "command",
+              "command": "bash '$PROJ/_SYSTEM/kernel/kernel.sh' && bash '$PROJ/_SYSTEM/kernel/scan-check.sh'",
+              "timeout": 5
+            }
+          ]
+        }
+      ]
+    }
+  }
+  EOF
   ```
-- **If no** → continue without, note in `ENV.md` that auto-start is disabled.
+  Confirm: *"Kernel activated — micro-scans every 10 messages."*
+- **If no** → continue without. The system works, scans happen only at closure.
 
 **If `PI_CODING_AGENT` detected → offer:**
 
@@ -93,8 +140,7 @@ Ask:
 1. **Name or nickname**
 2. **Short description** — who you are, what you do, tech interests
 
-Create `_SYSTEM/profile/README.md` with the collected info.
-Create `_SYSTEM/profile/language.md` with the language preference.
+Add collected info to `01_Profil/profil.md` (section `## 👤 User`).
 
 ### 6. Obsidian configuration
 
@@ -105,7 +151,7 @@ Create or update `.obsidian/graph.json` to exclude system folders from the graph
 ```json
 {
   "collapse-filter": true,
-  "search": "-path:\"_SYSTEM\" -path:\"_Templates\" -path:\"_Meta\"",
+  "search": "-path:\"_SYSTEM\" -path:\"_Templates\"",
   "showTags": false,
   "showAttachments": false,
   "hideUnresolved": false,
@@ -127,17 +173,21 @@ Create or update `.obsidian/graph.json` to exclude system folders from the graph
 }
 ```
 
-> If `.obsidian/graph.json` already exists: update only the `"search"` field without touching the rest.
-
 ### 7. Finalization
 
 Create the following files (gitignored — not tracked):
-- `_SYSTEM/memory/observations.md` — title `# Observations` + line *"No observations yet."*
-- `_SYSTEM/memory/modes.md` — title `# Work modes` + line *"No sessions recorded."*
-- `_SYSTEM/profile/traits.md` — empty table: `| Trait | When it activates | Rule for the AI |`
+
+- `01_Profil/index.md` — OKF bundle summary
+- `01_Profil/log.md` — change history (OKF §7)
+- `01_Profil/profil.md` — sections 🖥️ Machine, 👤 User, 🧬 Traits, 🎯 Skills (with OKF frontmatter `type: Symbiose.Profile`)
+- `01_Profil/memory/observations.md` — OKF frontmatter (`type: Symbiose.Memory`), content *"No observations yet."*
+- `01_Profil/memory/modes.md` — OKF frontmatter (`type: Symbiose.ModeHistory`), content *"No sessions recorded."*
 
 Then:
-- Write the marker: `_SYSTEM/.init_done` (empty file)
 - Update `00_📥Inbox/00_TRANSFERT.md`: "Initialization session — system ready"
 
-> Note: the final messages "Yo [name], système prêt." + "System is ready. Start whenever you are." are handled by AUTOSTART.md after this wizard ends.
+> Then display the welcome message directly:
+> ```
+> Yo [name], system ready.
+> System is ready. Start whenever you are.
+> ```

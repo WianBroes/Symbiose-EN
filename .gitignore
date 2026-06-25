@@ -6,11 +6,11 @@ Thumbs.db
 *~
 
 # ─── Symbiose system ──────────────────────────────
-_SYSTEM/.init_done
-_SYSTEM/ENV.md
-_SYSTEM/profile/
-_SYSTEM/memory/observations.md
-_SYSTEM/memory/modes.md
+01_Profil/
+_SYSTEM/kernel/.msg_count
+_SYSTEM/kernel/.msg_count.lock*
+_SYSTEM/kernel/.closure_count
+_SYSTEM/kernel/.dream_requested
 
 # ─── Python ─────────────────────────────────────────
 __pycache__/
@@ -35,7 +35,6 @@ build/
 .claudian/
 .smart-env/
 .continuerc.json
-CLAUDE.md
 
 # ─── Aider ──────────────────────────────────────────
 .aider*
@@ -43,11 +42,15 @@ CLAUDE.md
 
 # ─── Pi (config perso) ──────────────────────────────
 .pi/
+!.pi/extensions/symbiose-kernel.ts
 
 # ─── Environnement ──────────────────────────────────
 .env
 .env.local
 *.private
+
+# ─── Pipeline alpha flags ───────────────────────
+_SYSTEM/alpha/.used_*
 
 # ─── Temporaires ────────────────────────────────────
 *.tmp
