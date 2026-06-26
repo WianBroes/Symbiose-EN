@@ -1,6 +1,6 @@
 ---
 name: export
-description: Export Symbiose framework or user data. Use when the user says "export framework", "export profile", "backup", "prepare for GitHub", or wants to migrate to a new machine or share the framework.
+description: Export Symbiose framework or user data. Use when the user says "export", "export framework", "export profile", "backup", "prepare for GitHub", or wants to migrate to a new machine or share the framework.
 ---
 
 # Export — Framework & user data
@@ -17,33 +17,25 @@ Contains no personal data.
 **What is copied:**
 ```
 AGENTS.md
-CLAUDE.md
 _SYSTEM/AUTOSTART.md
 _SYSTEM/CORE.md
 _SYSTEM/CONVENTIONS.md
 _SYSTEM/00_FIRST_STARTUP.md
-_SYSTEM/00_SESSION_CLOSE.md
 _SYSTEM/QUICK_START.md
 _SYSTEM/startup_ascii.md
 _SYSTEM/analyse.md
-_SYSTEM/backup.sh
-_SYSTEM/kernel/
-_SYSTEM/modes/
 _SYSTEM/skills/
-_Templates/
-pi-extensions/
+_SYSTEM/_Templates/
+_SYSTEM/modes/
+_SYSTEM/pi-extensions/
 .gitignore
-README.md
-LICENSE
-CHANGELOG.md
-CONTRIBUTING.md
 ```
 
 **What is NOT copied:**
-- `01_Profil/` (personal data)
+- `01_🧠Profil/` (personal data)
 - `00_📥Inbox/` (content)
 - Project folders (`XX_*/`)
-- `.obsidian/`, `.claude/`
+- `.obsidian/`, `.claude/`, `CLAUDE.md`
 
 **Created:** `00_📥Inbox/00_TRANSFERT.md` empty (startup template)
 
@@ -53,7 +45,18 @@ CONTRIBUTING.md
 
 ### Mode B — User data
 
-Exports `01_Profil/` for migration to a new machine or tool.
+Exports `01_🧠Profil/` for migration to a new machine or tool.
+
+**What is copied:**
+```
+01_🧠Profil/
+  👤profil.md
+  memory/
+    observations.md
+    modes.md
+  profile/
+    (all files)
+```
 
 **Destination naming:** `@user_[hostname]_YYYY-MM-DD/`
 The `@` prefix identifies a Symbiose user export at import.
@@ -77,21 +80,39 @@ Ask for destination path or propose default:
 - Framework: `~/Desktop/Symbiose-framework-YYYY-MM-DD/`
 - User data: `~/Desktop/@user_[hostname]_YYYY-MM-DD/`
 
+Retrieve hostname: `hostname`
+Retrieve date: `date +%Y-%m-%d`
+
 ### 3. Copy
 
-Use `git archive` if in a git repo (cleanest, respects .gitignore):
+**Mode A — Framework:**
 ```bash
-git archive --format=zip HEAD -o ~/Desktop/Symbiose-$(date +%Y-%m-%d).zip
+DEST=~/Desktop/Symbiose-framework-$(date +%Y-%m-%d)
+mkdir -p "$DEST/_SYSTEM" "$DEST/00_📥Inbox"
+
+cp AGENTS.md "$DEST/"
+cp .gitignore "$DEST/"
+cp _SYSTEM/AUTOSTART.md _SYSTEM/CORE.md _SYSTEM/CONVENTIONS.md \
+   _SYSTEM/00_FIRST_STARTUP.md _SYSTEM/QUICK_START.md \
+   _SYSTEM/startup_ascii.md _SYSTEM/analyse.md "$DEST/_SYSTEM/"
+cp -r _SYSTEM/skills "$DEST/_SYSTEM/"
+cp -r _SYSTEM/_Templates "$DEST/_SYSTEM/"
+cp -r _SYSTEM/modes "$DEST/_SYSTEM/"
+cp -r _SYSTEM/pi-extensions "$DEST/_SYSTEM/"
 ```
 
-Or manual copy for a directory export.
+Create empty TRANSFERT:
+```bash
+echo "# TRANSFERT" > "$DEST/00_📥Inbox/00_TRANSFERT.md"
+```
 
-For user data:
+**Mode B — User data:**
 ```bash
 HOST=$(hostname)
 DATE=$(date +%Y-%m-%d)
 DEST=~/Desktop/@user_${HOST}_${DATE}
-cp -r 01_Profil/. "$DEST"
+
+cp -r 01_🧠Profil/. "$DEST"
 ```
 
 ### 4. Validate
@@ -107,6 +128,6 @@ Confirm: **"Export complete → `[path]`"**
 
 ## Rules
 
-- Never include `01_Profil/` in a framework export
+- Never include `01_🧠Profil/` in a framework export
 - Never modify source files — copy only
 - If destination already exists → ask for confirmation before overwriting
