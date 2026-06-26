@@ -18,41 +18,42 @@ Save the preference to `01_Profil/profil.md` (field `**Language**` in the 👤 U
 
 ### 2. Machine scan
 
-Fill `01_Profil/profil.md` (section 🖥️ Machine). Detect OS with `uname -s`, then adapt:
+Fill `01_Profil/profil.md` (section 🖥️ Machine). Run **one command at a time** — do not group.
 
 ```bash
-# OS
-uname -s   # → Linux / Darwin / MINGW* (Windows git-bash)
+uname -s
+```
+→ Linux / Darwin / MINGW* → adapt the following commands accordingly.
 
-# Linux
+**Linux:**
+```bash
 cat /etc/os-release | grep PRETTY_NAME
-# macOS
-sw_vers -productName && sw_vers -productVersion
-# Windows (git-bash)
-uname -o
-
-# Kernel
 uname -r
-
-# CPU
-# Linux
-lscpu | grep "Model name"
-# macOS
-sysctl -n machdep.cpu.brand_string
-# Windows
-wmic cpu get name 2>/dev/null || echo "N/A"
-
-# RAM
-# Linux
+cat /proc/cpuinfo | grep "model name" | head -1 | cut -d':' -f2 | xargs
 free -h | awk '/^Mem:/{print $2}'
-# macOS
-echo "$(( $(sysctl -n hw.memsize) / 1073741824 )) GiB"
-# Windows
-wmic computersystem get TotalPhysicalMemory 2>/dev/null || echo "N/A"
-
-# Shell
 echo $SHELL
 ```
+
+**macOS:**
+```bash
+sw_vers -productName
+sw_vers -productVersion
+uname -r
+sysctl -n machdep.cpu.brand_string
+echo "$(( $(sysctl -n hw.memsize) / 1073741824 )) GiB"
+echo $SHELL
+```
+
+**Windows (git-bash):**
+```bash
+uname -o
+uname -r
+wmic cpu get name 2>/dev/null || echo "N/A"
+wmic computersystem get TotalPhysicalMemory 2>/dev/null || echo "N/A"
+echo $SHELL
+```
+
+> Rule: one command per call. If a command fails, continue with the next — do not block.
 
 ### 3. Tool detection
 
@@ -133,6 +134,11 @@ Install now?
 > - Stay lucid and critical: I am a tool, not a source of truth.
 > - At the end of each session, say **"close"** or **"we're done"**.
 > - Core idea: **you are building your own system**. I provide the framework, you fill in the content.
+>
+> **Nothing is fixed.**
+> The structure you see — folders, names, categories, rules — is a starting point, not a constraint.
+> Everything can be renamed, reorganized, removed or enriched. Just say so.
+> The system adapts to you, not the other way around.
 
 ### 5. User profile
 
@@ -151,7 +157,7 @@ Create or update `.obsidian/graph.json` to exclude system folders from the graph
 ```json
 {
   "collapse-filter": true,
-  "search": "-path:\"_SYSTEM\" -path:\"_Templates\"",
+  "search": "-path:\"_SYSTEM\"",
   "showTags": false,
   "showAttachments": false,
   "hideUnresolved": false,
@@ -173,18 +179,51 @@ Create or update `.obsidian/graph.json` to exclude system folders from the graph
 }
 ```
 
+> If `.obsidian/graph.json` already exists: update only the `"search"` field, leave the rest unchanged.
+
 ### 7. Finalization
 
 Create the following files (gitignored — not tracked):
 
-- `01_Profil/index.md` — OKF bundle summary
+- `01_Profil/index.md` — OKF bundle summary listing concepts
 - `01_Profil/log.md` — change history (OKF §7)
-- `01_Profil/profil.md` — sections 🖥️ Machine, 👤 User, 🧬 Traits, 🎯 Skills (with OKF frontmatter `type: Symbiose.Profile`)
+- `01_Profil/profil.md` — sections 🖥️ Machine, 👤 User, 🧬 Traits, 🎯 Skills (single file, created at step 2) — with OKF frontmatter (`type: Symbiose.Profile`)
 - `01_Profil/memory/observations.md` — OKF frontmatter (`type: Symbiose.Memory`), content *"No observations yet."*
 - `01_Profil/memory/modes.md` — OKF frontmatter (`type: Symbiose.ModeHistory`), content *"No sessions recorded."*
 
+Create vault folders (gitignored — not tracked) with their `PROJET.md`:
+
+| Folder | name | type | status | description |
+|--------|------|------|--------|-------------|
+| `02_Symbiose/` | Symbiose | code | active | Adaptive AI framework — pure .md, zero dependency |
+| `03_Dev/` | Dev | code | dormant | Development projects and code |
+| `04_Life/` | Life | life | dormant | Life projects and personal development |
+| `05_Finances/` | Finances | dossier | dormant | Financial tracking and assets |
+| `06_Research/` | Research | dossier | dormant | Research, studies, learning |
+| `07_Creative/` | Creative | dossier | dormant | Creative projects and design |
+
+Each `PROJET.md` is generated from `_SYSTEM/_Templates/Projet.md` by replacing `{{NAME}}`, `{{DESCRIPTION}}`, `type`, `status` and `last_activity` (today's date). `{{TREE}}` = minimal folder tree. `{{STATUS_NOTES}}` = "No active project." except for Symbiose ("Active — admin: [username].").
+
+> These folders are a starting point — the user can rename, delete, or add via the `new-project` skill.
+
 Then:
-- Update `00_📥Inbox/00_TRANSFERT.md`: "Initialization session — system ready"
+- Create `00_📥Inbox/` and `00_📥Inbox/00_TRANSFERT.md` with the initial content:
+  ```
+  ---
+  type: Symbiose.Transfert
+  updated: [today's date]
+  ---
+
+  # TRANSFERT
+
+  ## En chantier
+
+  *(empty)*
+
+  ## Résolu cette session
+
+  - Initialization session — system ready ✓
+  ```
 
 > Then display the welcome message directly:
 > ```

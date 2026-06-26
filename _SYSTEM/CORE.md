@@ -34,11 +34,12 @@ The system enables without doing for you. It creates the conditions — structur
 Project structure:
 ```
 AGENTS.md              ← Entry point (loaded by all tools)
-_SYSTEM/               ← System core
+_SYSTEM/               ← System core (only tracked folder in git)
   CORE.md              ← This file
   AUTOSTART.md         ← Startup sequence
   00_FIRST_STARTUP.md  ← First startup wizard
-  00_SESSION_CLOSE.md  ← Closure ritual
+  COMMANDES.md         ← Triggers and keywords
+  FONCTIONNEMENT.md    ← Architecture under the hood
   startup_ascii.md     ← ASCII art
   analyse.md           ← Scan protocol (micro + macro)
   kernel/              ← Mechanical counter + flags
@@ -49,13 +50,17 @@ _SYSTEM/               ← System core
   skills/              ← On-demand skills
     import/SKILL.md    ← Document import & indexing
     export/SKILL.md    ← Framework & profile export
-pi-extensions/         ← Optional extensions (e.g. web-search for PI)
+    _INDEX.md          ← Skills manifest
+  pi-extensions/       ← Optional extensions (e.g. web-search for PI)
+
+⬇️ Created at first startup (gitignored):
 00_📥Inbox/           ← Incoming files & TRANSFERT.md
-01_Profil/            ← Personal data (gitignored) — OKF v0.1 bundle
+01_Profil/            ← Personal data — OKF v0.1 compliant bundle
   index.md            ← Bundle summary (OKF §6)
   log.md              ← Change history (OKF §7)
   profil.md           ← Machine + user + traits + skills (init marker)
   memory/             ← Observations & mode history
+02_… 07_/             ← Personal vault (projects, life, finances…)
 ```
 
 ### What survives reset — what gets recreated
@@ -64,8 +69,10 @@ A reset = delete `01_Profil/profil.md` + rerun the wizard (`00_FIRST_STARTUP.md`
 
 | Type | Files | Reset |
 |------|-------|-------|
-| **System** (logic, protocols) | `CORE.md`, `AUTOSTART.md`, `00_FIRST_STARTUP.md`, `00_SESSION_CLOSE.md`, `startup_ascii.md`, `AGENTS.md`, `skills/`, `modes/`, `alpha/` | ✅ Survives — do not touch |
-| **User** (session data) | `01_Profil/profil.md`, `memory/`, `00_📥Inbox/00_TRANSFERT.md` | ♻️ Recreated by the wizard |
+| **System** (logic, protocols) | `_SYSTEM/` complete — `CORE.md`, `AUTOSTART.md`, `00_FIRST_STARTUP.md`, `COMMANDES.md`, `FONCTIONNEMENT.md`, `startup_ascii.md`, `AGENTS.md`, `skills/`, `modes/`, `alpha/` | ✅ Survives — do not touch |
+| **User** (session data) | `01_Profil/`, `00_📥Inbox/`, `02_…07_/` | ♻️ Recreated by the wizard |
+
+> **Rule:** any new protocol or convention added to the system (`skills/import/SKILL.md`, etc.) is a system file — it belongs to the framework and survives the reset. It doesn't need to be "manually protected".
 
 ---
 
@@ -120,6 +127,10 @@ I am the AI instance of the current session. My tools: read, write, edit, execut
 - `git pull --quiet` — no full diffs in context.
 - `git log --oneline -5` max — use `git diff --stat` or `| head -20`.
 - Any output >20 lines → truncate before executing.
+
+**Factual verifiable data**
+- Time, date, file state, system variable → **always verify via bash**. Never invent.
+- If bash is not available → say "I don't know" explicitly. Never an invented value.
 
 **Tokens**
 - >70% of context budget: 1 file max, estimate cost before writing >500 tokens, ask for confirmation.
@@ -214,6 +225,10 @@ Any message — SMS, email, legal document — only makes sense in its upstream 
 
 **Rule:** any extraction used as evidence or analysis must include the triggering message. If upstream context is absent, the message is marked `[incomplete context]` and cannot be treated as an independent observation.
 
+**Typical case:** A wrote "the situation is deteriorating" → B replies using that same wording → the extraction only keeps the reply → false attribution of an autonomous observation by B.
+
+Applies to: SMS, email threads, legal exchanges, meeting minutes, written testimonies, any document that responds to another.
+
 ---
 
 ## 5. Personal context
@@ -258,10 +273,12 @@ Modes are **auto-detected** from session signals. Each mode suggests an autonomy
 
 ```
 _SYSTEM/kernel/
-├── kernel.sh         ← atomic increment (flock/mkdir) — called after each message
+├── kernel.sh         ← atomic increment (flock) — called after each message
 ├── scan-check.sh     ← reads .scan_interval, outputs [scan] if it's time
+├── closure.sh        ← increments .closure_count, sets .dream_requested at threshold
 ├── .msg_count        ← shared counter across all tools
-└── .scan_interval    ← interval in messages (default: 10)
+├── .scan_interval    ← interval in messages (default: 10)
+└── .closure_count    ← closure counter (managed by closure.sh)
 ```
 
 **Integration by tool:**
